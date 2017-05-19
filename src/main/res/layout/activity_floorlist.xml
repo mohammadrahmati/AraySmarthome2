@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffecb3"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/vahed1"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="#dce775"
+            android:text="@string/vahed1" />
+
+        <Button
+            android:id="@+id/vahed2"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="#dce775"
+            android:text="@string/vahed2" />
+
+        <Button
+            android:id="@+id/vahed3"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="#dce775"
+            android:text="@string/vahed3" />
+
+        <Button
+            android:id="@+id/vahed4"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:background="#dce775"
+            android:text="@string/vahed4" />
+    </LinearLayout>
+
+    </android.support.design.widget.CoordinatorLayout>

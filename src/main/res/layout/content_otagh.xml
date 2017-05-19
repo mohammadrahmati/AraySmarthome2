@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.mohammad.araysmarthome.Otagh"
+    tools:showIn="@layout/activity_otagh"
+    android:background="#ffecb3"
+    android:id="@+id/Otagh"
+
+    >
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="368dp"
+        android:layout_height="551dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="9dp">
+
+        <ImageView
+            android:id="@+id/aks"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/bedroom" />
+
+        <Switch
+            android:id="@+id/switch2"
+            style="@style/mohammadTheme1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:checked="false"
+            android:gravity="left"
+            android:splitTrack="false"
+            android:text="@string/kelid1"
+            tools:checked="false" />
+
+        <Switch
+            android:id="@+id/switch3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="left"
+            android:text="@string/kelid2" />
+
+        <Switch
+            android:id="@+id/switch4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
+            android:gravity="left"
+            android:text="@string/kelid3" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="RGB"
+            android:id="@+id/RGB"
+            />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

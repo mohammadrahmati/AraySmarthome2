@@ -1,0 +1,34 @@
+﻿<resources>
+    <string name="app_name">AraySmarthome</string>
+    <string name="preference_file_key">0</string>
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="toolbar_title">Toolbar Title</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_floors">Floors</string>
+    <string name="title_activity_floorlist">Floorlist</string>
+    <string name="title_activity_otagh">Otagh</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="adress">ادرس:تبریز زعفرانیه میدان شهریار پشت بانک صادرات کوچه شکوفه3 پلاک8</string>
+    <string name="number">تلفن :041 -33823668</string>
+    <string name="vahed1">unit 1</string>
+    <string name="vahed2">unit 2</string>
+    <string name="vahed3">unit 3</string>
+    <string name="vahed4">unit 4</string>
+    <string name="updatemadules">update madules</string>
+    <string name="settings">settings</string>
+    <string name="aboutus">about us</string>
+    <string name="contactus">contact us</string>
+    <string name="senarios">scenarios</string>
+    <string name="persian">فارسی</string>
+    <string name="english">english</string>
+    <string name="floor2">floor 2</string>
+    <string name="floor3">floor 3</string>
+    <string name="floor4">floor 4</string>
+    <string name="reacive">reacive</string>
+    <string name="kelid1">switch 1</string>
+    <string name="kelid2">switch 2</string>
+    <string name="kelid3">switch 3</string>
+    <string name="color_dialog_title">Choose color</string>
+</resources>
