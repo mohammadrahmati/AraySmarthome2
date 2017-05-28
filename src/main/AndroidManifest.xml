@@ -40,12 +40,12 @@
         <activity
             android:name=".Otagh"
             android:label="@string/title_activity_otagh"
-            android:theme="@style/setting"/>
+            android:theme="@style/setting" />
         <activity android:name=".contact" />
-
-        <activity android:name=".settings"
-            android:theme="@style/setting"
-            />
+        <activity
+            android:name=".settings"
+            android:theme="@style/setting" />
+        <activity android:name=".listview"></activity>
     </application>
 
 </manifest>

@@ -11,13 +11,12 @@ import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Button;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends ArrayAdapter {
 
-    @NonNull
+
     @Override
     public Context getContext() {
         return context;
