@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.StringTokenizer;
@@ -35,12 +36,10 @@ public class Floorlist extends Activity  {
         vahed1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(Floorlist.this, Otagh.class);*/
                 Intent data1 = new Intent(getBaseContext(), Otagh.class);
-                String sessionId1=data2+".v1";
+                String sessionId1=data2+"1";
                 data1.putExtra("EXTRA_SESSION_ID", sessionId1);
                 startActivity(data1);
-               /* startActivity(intent);*/
 
             }
         });
@@ -48,13 +47,10 @@ public class Floorlist extends Activity  {
         vahed2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent(Floorlist.this, Room.class);*/
                 Intent data1 = new Intent(getBaseContext(), Otagh.class);
-                String sessionId1=data2+".v2";
+                String sessionId1=data2+"2";
                 data1.putExtra("EXTRA_SESSION_ID", sessionId1);
                 startActivity(data1);
-               /* startActivity(intent)*/;
-
 
             }
         });
@@ -62,12 +58,10 @@ public class Floorlist extends Activity  {
         vahed3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Intent intent = new Intent(Floorlist.this, First.class);*/
                 Intent data1 = new Intent(getBaseContext(), Otagh.class);
-                String sessionId1=data2+".v3";
+                String sessionId1=data2+"3";
                 data1.putExtra("EXTRA_SESSION_ID", sessionId1);
                 startActivity(data1);
-                /*startActivity(intent);*/
 
             }
         });
@@ -76,13 +70,10 @@ public class Floorlist extends Activity  {
         vahed4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent intent = new Intent(Floorlist.this, Otagh.class);*/
                 Intent data1 = new Intent(getBaseContext(), Otagh.class);
                 String sessionId1=data2+".v4";
                 data1.putExtra("EXTRA_SESSION_ID", sessionId1);
                 startActivity(data1);
-                /*startActivity(intent);*/
-
             }
         });
 

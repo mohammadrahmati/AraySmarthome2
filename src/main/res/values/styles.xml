@@ -35,6 +35,9 @@
         <item name="android:textColorPrimary">@color/black_de</item>
     </style>
 
-    <style name="setting" parent="Theme.AppCompat.Light.NoActionBar" />
+    <style name="setting" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimaryInverse">@color/black_de</item>
+        <item name="android:textColorSecondaryInverse">@color/black_de</item>
+    </style>
 
 </resources>

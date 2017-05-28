@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 //---create a socket---
                 serverAddress =
                         InetAddress.getByName(Module_IP);
-                socket = new Socket(serverAddress, 1394);
+                socket = new Socket(serverAddress, 1716);
                 commsThread = new CommsThread(socket);
                 commsThread.start();
                 //---sign in for the user; sends the nick name---

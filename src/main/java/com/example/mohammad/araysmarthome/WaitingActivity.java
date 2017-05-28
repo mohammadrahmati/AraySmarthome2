@@ -7,16 +7,20 @@
         import android.app.Activity;
         import android.content.Context;
         import android.content.Intent;
+        import android.content.SharedPreferences;
+        import java.util.Random;
         import android.content.pm.ActivityInfo;
         import android.net.DhcpInfo;
         import android.net.wifi.WifiManager;
         import android.os.AsyncTask;
         import android.os.Bundle;
         import android.os.Handler;
+        import android.os.Message;
         import android.support.v7.app.AppCompatActivity;
         import android.text.format.Formatter;
         import android.util.Log;
         import android.view.View;
+        import android.widget.TextView;
         import android.widget.Toast;
 
         import java.io.IOException;
@@ -25,6 +29,8 @@
         import java.net.Socket;
         import java.net.UnknownHostException;
         import java.nio.ByteOrder;
+        import java.util.Random;
+        import java.util.StringTokenizer;
         import java.util.Timer;
         import java.util.TimerTask;
 
@@ -41,6 +47,7 @@ public class WaitingActivity extends AppCompatActivity {
     CommsThread commsThread;
     String addresss;
     int info;
+    public static Context mContext;
     MaterialDialog mMaterialDialog;
     /////////////////////////////////////////////////////////////////
     public void main(){
@@ -60,7 +67,7 @@ public class WaitingActivity extends AppCompatActivity {
             try {
                 serverAddress =
                         InetAddress.getByName(Module_IP);
-                socket = new Socket(serverAddress, 1394);
+                socket = new Socket(serverAddress, 1716);
                 commsThread = new CommsThread(socket);
                 commsThread.start();
                 connected = true;
@@ -106,6 +113,8 @@ public class WaitingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.waiting);
         main();
+        mContext=this;
+
 ////////////////////////////////////////////////////////////
         mMaterialDialog = new MaterialDialog(this)
                 .setTitle("خطا")
@@ -130,9 +139,53 @@ public class WaitingActivity extends AppCompatActivity {
     @Override
     public void onResume(){
         super.onResume();
+        if(0==0){
         try {
-
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+            @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = pref.edit();
             new CreateCommThreadTask().execute();
+            ///////////////////////////////////////////////////
+            String DBA=pref.getString("DBA","0");
+            if (DBA.equals("1")) {
+                 for(int i = 0;i<10;i++) {
+                     String data = pref.getString("database", null);
+                     StringTokenizer sec = new StringTokenizer(data, ":");
+                     String New = sec.nextToken();
+                     String code = sec.nextToken();
+                     Log.i("sadasdasd", "Asdasdsda");
+                     String floor = sec.nextToken();
+                     String unit = sec.nextToken();
+                     String room = sec.nextToken();
+                     String type = sec.nextToken();
+                     editor.putString("m" + 1, code);
+                     floor = floor.substring(1, 2);
+                     unit = unit.substring(1, 2);
+                     room = room.substring(1, 2);
+                     Log.i("sadasdasd", "Asdasdsda");
+
+                 }
+
+
+
+
+
+
+               /* final int a = Integer.parseInt(Count);
+                String []madule = new String[a];
+                int h =0,k;
+                String s;
+                for(int i=0; i<a; i++) {
+                    k = MainDataString.indexOf("new",h);
+                    madule[i]= MainDataString.substring(h,k);
+                    s=String.valueOf(i);
+                    editor.putString("madule"+s, madule[i]);
+                    editor.apply();
+                    Toast.makeText(getBaseContext(),madule[i], Toast.LENGTH_SHORT).show();
+                    h=k+3;
+                }*/
+            editor.putString(DBA,"0");
+            }
+            ///////////////////////////////////////////////////
 
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -140,12 +193,46 @@ public class WaitingActivity extends AppCompatActivity {
                     finish();
                     Intent intent = new Intent(WaitingActivity.this, Main3Activity.class);
                     startActivity(intent);
+                    finish();
                 }
-            }, 2000);
+            }, 1000);
         } catch (Exception e) {
             Log.d("Sockets", "onResomeError");
+        }}
+        else {
+            mMaterialDialog.show();
         }
+
     }
+    private String getRandomHexString(int numchars){
+        Random r = new Random();
+        StringBuffer sb = new StringBuffer();
+        while(sb.length() < numchars){
+            sb.append(Integer.toHexString(r.nextInt()));
+        }
+
+        return sb.toString().substring(0, numchars);
+    }
+    private static String hasan;
+    static Handler UIupdater = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            int numOfBytesReceived = msg.arg1;
+            byte[] buffer = (byte[]) msg.obj;
+
+
+            Log.i("asdasdasd","asdadasd");
+            //---convert the entire byte array to string---
+            String strReceived = new String(buffer);
+
+            //---extract only the actual string received---
+            strReceived = strReceived.substring(0, numOfBytesReceived);
+            hasan = strReceived;
+
+
+        }
+    };
     @Override
     public void onPause() {
         super.onPause();

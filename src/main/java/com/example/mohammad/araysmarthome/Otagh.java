@@ -130,7 +130,7 @@ static Handler UIupdater = new Handler() {
             try {
                 serverAddress =
                         InetAddress.getByName(Module_IP);
-                socket = new Socket(serverAddress, 1394);
+                socket = new Socket(serverAddress,1716);
                 commsThread = new CommsThread(socket);
                 commsThread.start();
                 connected = true;
@@ -196,10 +196,11 @@ ListView products_lv;
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         setContentView(R.layout.activity_otagh);
          final String data3 = getIntent().getStringExtra("EXTRA_SESSION_ID");
-
+        Toast.makeText(getBaseContext(),data3,Toast.LENGTH_SHORT).show();
 /////////////////////////////////////////////////////////////////////////////
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = pref.edit();
+
 //////////////////////////////////////////////////////////////////////////
         root = findViewById(R.id.Otagh);
         changeBackgroundColor(currentBackgroundColor);
@@ -281,21 +282,29 @@ ListView products_lv;
         imgView = (AppCompatImageView) findViewById( R.id.aks);
         btnSelectImage.setOnClickListener(this);
         main();
-        Switch mySwitch2 = (Switch) findViewById(R.id.switch2);
+        final Switch mySwitch2 = (Switch) findViewById(R.id.switch2);
         Switch mySwitch3 = (Switch) findViewById(R.id.switch3);
         Switch mySwitch4 = (Switch) findViewById(R.id.switch4);
+        if(data3.equals("22")) {
+            mySwitch2.setVisibility(View.VISIBLE);
+        }
         mySwitch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     try {
-                        sendToServer(data3 + ".k1.ON\r\n");
+                        String c = pref.getString("123","null");
+                            if(data3.equals("22")) {
+                            sendToServer(c + ":ON\r\n");
+                        }
                     }
                     catch (Exception e) {
                         Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
 
                 } else {
-                    try{ sendToServer(data3+".k1.OFF\r\n");}
+                    try{
+                        String c = pref.getString("123","null");
+                        sendToServer(data3 + c + ":ON\r\n");}
                     catch (Exception e) {
                         Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
 
@@ -335,7 +344,7 @@ ListView products_lv;
                         Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
 
                 } else {
-                    try{ sendToServer(data3+".k3.OFF\r\n");}
+                    try{ sendToServer(data3+".OFF\r\n");}
                     catch (Exception e) {
                         Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
 

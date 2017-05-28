@@ -57,6 +57,7 @@
     Socket socket;
     boolean connected = false;
     CommsThread commsThread;
+            public static Context mContext;
     //////////////////////////////////////////////////////////////////
            static String hasan;
             //////////////////////////////////
@@ -69,7 +70,10 @@
 
     }
     /////////////////////////////////////////////////////////////////////
-
+    public static void intent(){
+        Intent login = new Intent(mContext, WaitingActivity.class);
+        mContext.startActivity(login);
+    }
     //////////////////////////////////////////////////////////////////////
     public class CreateCommThreadTask extends AsyncTask<Void, Integer, Void> {
         @Override
@@ -78,7 +82,7 @@
 
                 serverAddress =
                         InetAddress.getByName(Module_IP);
-                socket = new Socket(serverAddress,1394);
+                socket = new Socket(serverAddress,1716);
                 commsThread = new CommsThread(socket);
                 commsThread.start();
                 connected = true;
@@ -119,27 +123,12 @@
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-
+        mContext = this;
         //////////////////////////////////////////////////////////////////////////////////
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+        final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = pref.edit();
-        StringTokenizer sec = new StringTokenizer(NICKNAME, "TEDAD");
-        String Count = sec.nextToken();
-        TextView Text = (TextView)findViewById(R.id.textView4);
-        String MainDataString = sec.nextToken();
-        int a = Integer.parseInt(Count);
-        String []madule = new String[a+1];
-        int h =0,k;
-        String s;
-        for(int i=0; i<a; i++) {
-            k = MainDataString.indexOf("new",h);
-            madule[i]= MainDataString.substring(h,k);
-            s=String.valueOf(i);
-            editor.putString("madule"+s, madule[i]);
-            editor.apply();
-            /*Toast.makeText(getBaseContext(),madule[i], Toast.LENGTH_SHORT).show();*/
-            h=k+3;
-        }
+
+
         ///////////////////////////////////////////////////////////////////////////
         main();
 
@@ -212,7 +201,7 @@
                 data.putExtra("EXTRA_SESSION_ID", sessionId);
                 startActivity(data);*/
                /* startActivity(intent);*/
-                Toast.makeText(getBaseContext(),hasan, Toast.LENGTH_SHORT).show();
+               /* Toast.makeText(getBaseContext(),hasan, Toast.LENGTH_SHORT).show();*/
 
             }
         });
@@ -221,7 +210,7 @@
             public void onClick(View view) {
                /* Intent intent = new Intent(Main3Activity.this, Floorlist.class);*/
                 Intent data = new Intent(getBaseContext(), Floorlist.class);
-                String sessionId="t2";
+                String sessionId="2";
                 data.putExtra("EXTRA_SESSION_ID", sessionId);
                 startActivity(data);
               /*  startActivity(intent);*/
@@ -232,7 +221,7 @@
             public void onClick(View view) {
 
                 Intent data = new Intent(getBaseContext(), Floorlist.class);
-                String sessionId="t3";
+                String sessionId="3";
                 data.putExtra("EXTRA_SESSION_ID", sessionId);
                 startActivity(data);
             }
@@ -240,12 +229,11 @@
         L4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent data = new Intent(getBaseContext(), Floorlist.class);
                 Intent intent = new Intent(Main3Activity.this, Floorlist.class);
-                String sessionId="t4";
+                String sessionId="4";
                 intent.putExtra("EXTRA_SESSION_ID", sessionId);
-                startActivity(data);
                 startActivity(intent);
+
             }
         });
     }
@@ -257,12 +245,19 @@
             int numOfBytesReceived = msg.arg1;
             byte[] buffer = (byte[]) msg.obj;
 
+
+            Log.i("asdasdasd","asdadasd");
             //---convert the entire byte array to string---
             String strReceived = new String(buffer);
 
             //---extract only the actual string received---
             strReceived = strReceived.substring(0, numOfBytesReceived);
-            hasan =strReceived;
+            hasan = strReceived;
+
+            if(hasan.contains("new")) {
+                database.save(mContext, "database", hasan);
+                database.save(mContext, "DBA", "1");
+            }
         }
     };
     /////////////////////////////////////////////////////////////
@@ -274,7 +269,6 @@
                 if(connected){
                     socket.close();
                 }
-
             } catch (Exception e) {
                 //Log.d("Sockets", e.getLocalizedMessage());
                 Toast.makeText(getBaseContext(),"ErrInside",Toast.LENGTH_SHORT).show();
@@ -344,7 +338,15 @@
 
         } else if (id == R.id.update) {
                 try{
-                    sendToServer("sendupdate\r\n");
+                    String b ;
+                    Toast.makeText(getBaseContext(),hasan, Toast.LENGTH_SHORT).show();
+                    b=pref.getString("DBA","0");
+                    if (b.equals("1")){
+                        Intent login = new Intent(getBaseContext(), WaitingActivity.class);
+                        mContext.startActivity(login);
+                        finish();
+                    }
+
                 editor.putString("MACadress",getMacAddr());
                 }catch (Exception e) {
 

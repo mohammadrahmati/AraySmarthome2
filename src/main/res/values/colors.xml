@@ -22,5 +22,9 @@
     <color name="title">#222222</color>
     <color name="foreground_material_dark">#af0f0f</color>
     <color name="accent_material_light_2">#ffdd00</color>
+    <color name="a">#494E68</color>
+    <color name="b">#98878F</color>
+    <color name="c">#985E6D</color>
+    <color name="d">#192231</color>
 
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 public class database {
@@ -16,25 +17,25 @@ public class database {
         super();
     }
 
-    public static void save(Context context, String text) {
-        SharedPreferences settings;
-        Editor editor;
+    public static void save(Context context, String text , String text2) {
+        Log.i("asdasdasd","asdadasd");
+        SharedPreferences pref;
+       /* Editor editor;*/
 
-        //settings = PreferenceManager.getDefaultSharedPreferences(context);
-        settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE); //1
-        editor = settings.edit(); //2
-
-        editor.putString(PREFS_KEY, text); //3
-
-        editor.commit(); //4
+        pref = PreferenceManager.getDefaultSharedPreferences(context);
+        pref = context.getSharedPreferences("MyPref", 0); //1
+        SharedPreferences.Editor editor = pref.edit(); //2
+        Log.i("asdasdasd","asdadasd");
+        editor.putString(text,text2); //3
+        editor.apply(); //4
     }
 
-    public String getValue(Context context) {
+    public static String getValue(Context context , String text2) {
         SharedPreferences settings;
         String text;
         //settings = PreferenceManager.getDefaultSharedPreferences(context);
         settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        text = settings.getString(PREFS_KEY, null);
+        text = settings.getString( text2 , null);
         return text;
     }
 
@@ -53,10 +54,8 @@ public class database {
     public void removeValue(Context context) {
         SharedPreferences settings;
         Editor editor;
-
         settings = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();
-
         editor.remove(PREFS_KEY);
         editor.commit();
     }
