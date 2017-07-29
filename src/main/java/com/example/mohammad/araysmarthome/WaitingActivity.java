@@ -162,7 +162,6 @@ public class WaitingActivity extends AppCompatActivity {
                      unit = unit.substring(1, 2);
                      room = room.substring(1, 2);
                      Log.i("sadasdasd", "Asdasdsda");
-
                  }
 
 

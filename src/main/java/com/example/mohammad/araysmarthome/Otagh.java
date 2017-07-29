@@ -12,11 +12,15 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -55,7 +59,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+import java.util.ArrayList;
+import java.util.List;
 import me.drakeet.materialdialog.MaterialDialog;
 
 
@@ -63,15 +68,14 @@ public class Otagh extends AppCompatActivity implements View.OnClickListener{
     private static final int SELECT_PICTURE = 100;
     private static final String TAG = "MainActivity";
     public final static String KEY_EXTRA_CONTACT_ID = "KEY_EXTRA_CONTACT_ID";
-    private View root;
+    //private View root;//for baclground color
     private int currentBackgroundColor = 0xffffffff;
     CoordinatorLayout coordinatorLayout;
     FloatingActionButton btnSelectImage;
     AppCompatImageView imgView;
-
+    RecyclerView recyclerView;
     /////////////////////////////////////////////////
     String Module_IP;
-    static final String NICKNAME = "salam\r\n";
     InetAddress serverAddress;
     Socket socket;
     boolean connected = false;
@@ -142,12 +146,14 @@ static Handler UIupdater = new Handler() {
             return null;
         }
     }
-    public void sendToServer(String message) {
-        try {{
+    public void sendToServer(String message)
+    {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        try {
             byte[] thr =
                     message.getBytes();
             new WriteToServerTask().execute(thr);
-            }
+
 
         } catch (Exception e) {
 
@@ -187,22 +193,24 @@ static Handler UIupdater = new Handler() {
     }
 ///////////////////////////////////////////////////
 
-ListView products_lv;
+    String[][] parts;
+    static final String[] NICKNAMES = { "f1:u3:r4:m3:01001101", "f1:u3:r4:m3:01010101" };
+    RecyclerView products_lv;
     @SuppressLint("WrongViewCast")
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         setContentView(R.layout.activity_otagh);
-         final String data3 = getIntent().getStringExtra("EXTRA_SESSION_ID");
-        Toast.makeText(getBaseContext(),data3,Toast.LENGTH_SHORT).show();
-/////////////////////////////////////////////////////////////////////////////
+        setUpRecyclerView();
+        ///////////////////////////////////////////////////////////////////////////////////
+         final String data3 = getIntent().getStringExtra("EXTRA_SESSION_ID");//recieved data
+        /////////////////////////////////////////////////////////////////////////////
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = pref.edit();
-
-//////////////////////////////////////////////////////////////////////////
-        root = findViewById(R.id.Otagh);
+        //////////////////////////////////////////////////////////////////////////   (RGB)
+        //root = findViewById(R.id.Otagh); //for background color
         changeBackgroundColor(currentBackgroundColor);
         findViewById(R.id.RGB).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -252,110 +260,41 @@ ListView products_lv;
                         .show();
             }
         });
+        ///////////////////////////////////////////////////////////////////////
 
-
-        ///////////////////////////////////
-        LinearLayout mainLayout = (LinearLayout) findViewById(R.id.linearLayout2);
-        Button btn = new Button(this);
-
-        /*mainLayout.addView(btn);
-        products_lv = (ListView) findViewById(R.id.listView);
-        final ProductAdapter productAdapter = new ProductAdapter(this, R.layout.product_list_row);
-        products_lv.setAdapter(productAdapter);
-
-
-        Product pr;
-        for(int i = 0; i < 10; i++){
-            pr = new Product(data3+i, i);
-            productAdapter.add(pr);
-        }
-        products_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String string= (String) productAdapter.getList().get(position).getName();
-                Toast.makeText(getBaseContext(), string,Toast.LENGTH_SHORT).show();
-            }
-        });
-*/
-        ////////////////////////////////////////////////////////////////////////////
         btnSelectImage = (FloatingActionButton) findViewById(R.id.btnSelectImage);
         imgView = (AppCompatImageView) findViewById( R.id.aks);
         btnSelectImage.setOnClickListener(this);
         main();
-        final Switch mySwitch2 = (Switch) findViewById(R.id.switch2);
-        Switch mySwitch3 = (Switch) findViewById(R.id.switch3);
-        Switch mySwitch4 = (Switch) findViewById(R.id.switch4);
-        if(data3.equals("22")) {
-            mySwitch2.setVisibility(View.VISIBLE);
+    }
+    RecyclerAdapter ra=new RecyclerAdapter(new Runnable() {
+        @Override
+        public void run() {
+
         }
-        mySwitch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    try {
-                        String c = pref.getString("123","null");
-                            if(data3.equals("22")) {
-                            sendToServer(c + ":ON\r\n");
-                        }
-                    }
-                    catch (Exception e) {
-                        Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
+    }, new Runnable() {
+        @Override
+        public void run() {
 
-                } else {
-                    try{
-                        String c = pref.getString("123","null");
-                        sendToServer(data3 + c + ":ON\r\n");}
-                    catch (Exception e) {
-                        Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
 
-                }
-            }
-        });
+        }
+    });
+    private void setUpRecyclerView() {
 
-        mySwitch3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    try {
-                        String adress = pref.getString("MACadress",null);
-                        Toast.makeText(getBaseContext(),adress,Toast.LENGTH_SHORT).show();
-                        sendToServer(data3 + ".k2.ON\r\n");
-                    }
-                    catch (Exception e) {
-                        Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
 
-                } else {
-                    try{ sendToServer(data3+".k2.OFF\r\n");}
-                    catch (Exception e) {
-                        Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
+     /*   recyclerView = (RecyclerView) findViewById(R.id.otagh_listView1);
+        RecyclerAdapter adapter = new RecyclerAdapter(getApplicationContext(),0);
+        recyclerView.setAdapter(adapter);
 
-                }
-            }
-        });
+        LinearLayoutManager mLinearLayoutManagerVertical = new LinearLayoutManager(getApplicationContext());
+        mLinearLayoutManagerVertical.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(mLinearLayoutManagerVertical);
 
-        mySwitch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    try {
-                        sendToServer(data3 + ".k3.ON\r\n");
-                    }
-                    catch (Exception e) {
-                        Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
-
-                } else {
-                    try{ sendToServer(data3+".OFF\r\n");}
-                    catch (Exception e) {
-                        Toast.makeText(getBaseContext(),"ارتباط برقرار نیست",Toast.LENGTH_SHORT).show();}
-
-                }
-            }
-        });
-
+        //recyclerView.setItemAnimator(new DefaultItemAnimator());*/
     }
     private void changeBackgroundColor(int selectedColor) {
         currentBackgroundColor = selectedColor;
-        root.setBackgroundColor(selectedColor);
+       // root.setBackgroundColor(selectedColor);
     }
     void openImageChooser() {
         Intent intent = new Intent();
@@ -399,13 +338,11 @@ ListView products_lv;
     public void onClick(View v) {
         openImageChooser();
     }
-//////////////////////////////////////////////////////////////
-
-
     ////////////////////////////////////////////////////////////////////
     @Override
     public void onResume(){
         super.onResume();
+
         try {
             new CreateCommThreadTask().execute();
         } catch (Exception e) {

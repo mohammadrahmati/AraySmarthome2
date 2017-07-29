@@ -52,7 +52,7 @@
         implements NavigationView.OnNavigationItemSelectedListener {
     /////////////////////////////////////////////////
     String Module_IP;
-    String NICKNAME = "3TEDADt1.v3.of4.k3newt1.v2.oa3.k2newt1.v2.oa2.k1new";
+    String NICKNAME = "t1.v3.of4.k3.01001101";
     InetAddress serverAddress;
     Socket socket;
     boolean connected = false;
@@ -70,11 +70,6 @@
 
     }
     /////////////////////////////////////////////////////////////////////
-    public static void intent(){
-        Intent login = new Intent(mContext, WaitingActivity.class);
-        mContext.startActivity(login);
-    }
-    //////////////////////////////////////////////////////////////////////
     public class CreateCommThreadTask extends AsyncTask<Void, Integer, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -123,56 +118,11 @@
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-        mContext = this;
         //////////////////////////////////////////////////////////////////////////////////
         final SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
         @SuppressLint("CommitPrefEdits") SharedPreferences.Editor editor = pref.edit();
-
-
         ///////////////////////////////////////////////////////////////////////////
         main();
-
-        //////////////////////////////////////////////////////////////
-
-
-        /*LinearLayout mainLayout = (LinearLayout) findViewById(R.id.`);*/
-        /*ListView products_lv = (ListView) findViewById(R.id.listView3);
-        final ProductAdapter productAdapter = new ProductAdapter(this, R.layout.product_floors);
-        products_lv.setAdapter(productAdapter);
-        Product pr;
-        int i;
-        for (i = 0; i < 10; i++) {
-            pr = new Product("طبقه" + i, i);
-            productAdapter.add(pr);
-
-        }*/
-
-
-
-        /*products_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("asdfgr","asdg");
-            }
-        });
-        Log.i("asdfgr","asdg");*/
-
-
-
-        /*products_lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> view, View v, int position, long id) {
-
-
-*//*
-                String string= productAdapter.getList().get(position).getName();
-                Toast.makeText(getBaseContext(),string, Toast.LENGTH_SHORT).show();
-                Intent data1 = new Intent(Main3Activity.this, Otagh.class);
-                data1.putExtra("EXTRA_SESSION_ID", string);
-                startActivity(data1);*//*
-            }
-        });*/
         ///////////////////////////////////////////////////////////////////////
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("صفحه اصلی");

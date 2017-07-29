@@ -3,7 +3,7 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:id="@+id/mainLayout"
+    android:id="@+id/mainLayout2"
     android:paddingTop="10dp"
     android:gravity="left|center_vertical">
 
@@ -15,11 +15,18 @@
         android:id="@+id/txt2"
         android:layout_weight="1" />
 
-    <CheckBox
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="On/Off"
-        android:id="@+id/checkBox"
+        android:id="@+id/button2"
+        android:gravity="center_vertical"
+        android:layout_gravity="right" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="On/Off"
+        android:id="@+id/button1"
         android:gravity="center_vertical"
         android:layout_gravity="right" />
 

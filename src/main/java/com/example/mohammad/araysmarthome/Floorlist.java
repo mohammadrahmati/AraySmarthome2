@@ -50,6 +50,7 @@ public class Floorlist extends Activity  {
                 Intent data1 = new Intent(getBaseContext(), Otagh.class);
                 String sessionId1=data2+"2";
                 data1.putExtra("EXTRA_SESSION_ID", sessionId1);
+                Log.i("khghyjg","gjhghg");
                 startActivity(data1);
 
             }
